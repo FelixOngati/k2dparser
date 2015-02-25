@@ -1,0 +1,51 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:p="http://primefaces.org/ui">
+<h:head>
+<title>K2D Portal</title>
+</h:head>
+<h:form>
+    <p:growl id="msgs" showDetail="true" escape="false" />
+ 
+    <h3 style="margin-top: 0">K2D Data Updater</h3>
+    <h4>Priz Select Facilty Below</h4>
+    <p:pickList id="pickList" value="#{pickListView.facilities}" var="facilities" itemLabel="#{facilities}" itemValue="#{facilities}"
+    			showSourceFilter="true" showTargetFilter="true" filterMatchMode="contains">
+    	<f:facet name="sourceCaption">Available</f:facet>
+        <f:facet name="targetCaption">Selected</f:facet>
+    	
+    </p:pickList>
+    
+    <p:pickList id="pickList2" value="#{pickListView.dataSets}" var="dataSets" itemLabel="#{dataSets}" itemValue="#{dataSets}"
+    			showSourceFilter="true" showTargetFilter="true" filterMatchMode="contains">
+    	<f:facet name="sourceCaption">Available</f:facet>
+        <f:facet name="targetCaption">Selected</f:facet>
+    	
+    </p:pickList>
+    
+    <p:outputLabel for="sttbutton" value="Start Date:" />
+        <p:calendar id="sttbutton" value="#{pickListView.startDate}" showOn="button" /><br/><br/>
+    <p:outputLabel for="endbutton" value="End Date:" />
+        <p:calendar id="endbutton" value="#{pickListView.endDate}" showOn="button" /><br/>   
+ 
+    <p:commandButton id="facilitySubmit" value="Submit" icon="ui-icon-check" style="margin-top:5px" action="#{pickListView.submit(pickListView.facilities.target,
+    pickListView.dataSets.target,pickListView.startDate,pickListView.endDate)}" ajax="false"/>
+  
+    <p:dialog modal="true" showEffect="fade" hideEffect="fade" widgetVar="dlg">
+        <h:panelGrid id="displayFacilities" columns="2">
+            <h:outputText value="Available: " style="font-weight:bold" />
+             <ui:repeat value="#{pickListView.facilities.source}" var="item">
+                <h:outputText value="#{item}" style="margin-right:5px" />
+            </ui:repeat>
+ 
+            <h:outputText value="Selected: " style="font-weight:bold" />
+            <ui:repeat value="#{pickListView.facilities.target}" var="item">
+                <h:outputText value="#{item}" style="margin-right:5px" />
+            </ui:repeat>
+        </h:panelGrid>
+    </p:dialog>
+</h:form>
+</html>
